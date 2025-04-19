@@ -9,8 +9,11 @@ twi.slashcmd({
         description: "What do you want to ask the 8-ball?",
         required: true
     }],
-    run: function(interaction) {
+    run: async function(interaction) {
         const question = interaction.data.options.getString("question");
+
+        // Acknowledge the interaction with defer() to give us more time
+        await interaction.defer();
 
         const responses = [
             "🎱 Yes, definitely.",
@@ -27,6 +30,7 @@ twi.slashcmd({
 
         const random = responses[Math.floor(Math.random() * responses.length)];
 
+        // After deferring, you can now send the final message
         interaction.createMessage({
             embeds: [{
                 title: "🎱 Magic 8-Ball",
